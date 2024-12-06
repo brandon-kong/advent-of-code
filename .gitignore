@@ -1,0 +1,6 @@
+# Cache
+.DS_Store
+
+# Binary files
+*.out
+
