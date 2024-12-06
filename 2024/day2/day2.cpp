@@ -47,6 +47,28 @@ bool isDifferenceSmall(std::vector<int> iterable) {
     return true;
 }
 
+bool isSafeReport(std::vector<int> report) {
+    return ((isAscending(report) || isDescending(report)) && isDifferenceSmall(report));
+}
+
+std::vector<std::vector<int> > getAllVectorsWithoutEach(std::vector<int> iterable) {
+    std::vector<std::vector<int> > res;
+
+    for (int i = 0; i < iterable.size(); i++) {
+        std::vector<int> newVector;
+
+        for (int j = 0; j < iterable.size(); j++) {
+            if (i != j) {
+                newVector.push_back(iterable[i]);
+            }
+        }
+
+        res.push_back(newVector);
+    }
+
+    return res;
+}
+
 int main() {
     std::ifstream inputFile("input.txt");
     
@@ -74,16 +96,38 @@ int main() {
     }
 
     int safeReports = 0;
+    int safeReportsWhenRemoving = 0;
 
     for (int i = 0; i < reports.size(); i++) {
         std::vector<int> report = reports[i];
-        
-        if ((isAscending(report) || isDescending(report)) && isDifferenceSmall(report)) {
+
+        // Part 1
+        if (isSafeReport(report)) {
             safeReports += 1;
+            safeReportsWhenRemoving += 1;
+        }
+        else {
+            // Part 2
+            std::vector<std::vector<int> > vectorsWithout = getAllVectorsWithoutEach(report);
+
+            for (int j = 0; j < vectorsWithout.size(); j++) {
+                std::vector<int> newReport = vectorsWithout[j];
+                
+
+                if (isSafeReport(newReport)) {
+                    std::cout << "YAYY" << std::endl;
+                    safeReportsWhenRemoving += 1;
+                    continue;
+                }
+            }
         }
     }
 
+    // Part 1
     std::cout << safeReports << std::endl;
+
+    // Part 2
+    std::cout << safeReportsWhenRemoving << std::endl;
 
     return EXIT_SUCCESS;
 }
