@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <math.h>
+#include <sstream>
 
 int main() {
     std::ifstream inputFile("input.txt");
@@ -11,13 +12,18 @@ int main() {
     }
 
     std::string line;
-
     std::vector<int> list1, list2;
 
     while (std::getline(inputFile, line)) {
+        std::istringstream iss(line);
+
         // each line has two numbers separated by 4 spaces, so we can use this to extract the numbers
         int num1, num2;
-        inputFile >> num1 >> num2;
+
+        if (!(iss >> num1 >> num2)) {
+            std::cerr << "Error reading numbers from line: " << line << std::endl;
+            return EXIT_FAILURE;
+        }
 
         list1.push_back(num1);
         list2.push_back(num2);
