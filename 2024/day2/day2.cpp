@@ -59,7 +59,7 @@ std::vector<std::vector<int> > getAllVectorsWithoutEach(std::vector<int> iterabl
 
         for (int j = 0; j < iterable.size(); j++) {
             if (i != j) {
-                newVector.push_back(iterable[i]);
+                newVector.push_back(iterable[j]);
             }
         }
 
@@ -67,6 +67,12 @@ std::vector<std::vector<int> > getAllVectorsWithoutEach(std::vector<int> iterabl
     }
 
     return res;
+}
+
+void printVector(std::vector<int> iterable) {
+    for (int i = 0; i < iterable.size(); i++) {
+        std::cout << iterable[i] << std::endl;
+    }
 }
 
 int main() {
@@ -113,11 +119,9 @@ int main() {
             for (int j = 0; j < vectorsWithout.size(); j++) {
                 std::vector<int> newReport = vectorsWithout[j];
                 
-
                 if (isSafeReport(newReport)) {
-                    std::cout << "YAYY" << std::endl;
                     safeReportsWhenRemoving += 1;
-                    continue;
+                    break;
                 }
             }
         }
